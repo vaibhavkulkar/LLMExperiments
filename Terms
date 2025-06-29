@@ -1,0 +1,106 @@
+Model
+An AI model is a computer program that is built to work like a human brain. You give it some input (i.e. a prompt), it does some processing, and it generates a response.
+
+Like a child, a model “learns” by being exposed to many examples of how people typically respond or behave in different situations. As it sees more and more examples, it begins to recognize patterns, understand language, and generate coherent responses.
+
+There are many different types of AI models. Some, which focus on language—like ChatGPT o3, Claude Sonnet 4, Gemini 2.5 Pro, Meta Llama 4, Grok 3, DeepSeek, and Mistral—are known as large language models (LLMs). Others are built for video, like Google Veo 3, OpenAI Sora, and Runway Gen-4. Some models specialize in generating voice, such as ElevenLabs, Cartesia, and Suno. There are also more traditional types of AI models, such as classification models (used in tasks like fraud detection), ranking models (used in search engines, social media feeds, and ads), and regression models (used to make numerical predictions).
+
+LLM (large language model)
+LLMs are text-based models, designed to understand and generate human-readable text. That’s why the name includes the word “language.”
+
+Recently, most LLMs have actually evolved into “multi-modal” models that can process and generate not just text but also images, audio, and other types of content within a single conversational interface. For example, all of the ChatGPT LLM models natively support text, images, and even voice. This started with GPT-4o, where “o” stands for “omni” (meaning it accepts any combination of text, audio, and image input).
+
+Here’s a really good primer on how LLMs actually work, and also this popular deep dive by Andrej Karpathy:
+
+
+Transformer
+The transformer architecture, developed by Google researchers in 2017, is the algorithmic discovery that made modern AI (and LLMs in particular) possible.
+
+Transformers introduced a mechanism called “attention,” where instead of only being able to read text word‑by‑word, sequentially, the model is able to look at all the words at once. This helps the models understand how words relate to each other, making them far better at capturing meaning, context, and nuance than earlier techniques.
+
+Another big advantage of the transformer architecture is that it’s highly parallelizable—it can process many parts of a sequence at the same time. This makes it possible to train much bigger and smarter models simply by scaling up the data and compute power. This breakthrough is why we suddenly went from basic chatbots to sophisticated AI assistants. Almost every major AI model today, including ChatGPT and Claude, is built on top of the transformer architecture.
+
+This is the best explanation of transformers I’ve seen. Here’s also a more technical and visual deep dive:
+
+
+Training/Pre-training
+Training is the process by which an AI model learns by analyzing massive amounts of data. This data might include large portions of the internet, every book ever published, audio recordings, movies, video games, etc. Training state-of-the-art models can take weeks or months, require processing terabytes of data, and cost hundreds of millions of dollars.
+
+For LLMs, the core training method is called “next-word prediction.” The model is shown billions of text sequences with the last word hidden, and it learns to predict what word should come next.
+
+As it trains, the model adjusts millions of internal settings called “weights.” These are similar to how neurons in the human brain strengthen or weaken their connections based on experience. When the model makes a correct prediction, those weights are reinforced. When it makes an incorrect one, they’re adjusted. Over time, this process helps the model improve its understanding of facts, grammar, reasoning, and how language works in different contexts. Here’s a quick visual explanation.
+
+If you’re skeptical of next-word prediction generating novel insights and super-intelligent AI systems, here’s Ilya Sutskever (co-founder of OpenAI) explaining why it’s deceptively powerful:
+
+
+Supervised learning
+Supervised learning refers to when a model is trained on “labeled” data—meaning the correct answers are provided. For example, the model might be given thousands of emails labeled “spam” or “not spam” and, from that, learn to spot the patterns that distinguish spam from non-spam. Once trained, the model can then classify new emails it’s never seen before.
+
+Most modern language models, including ChatGPT, use a subtype called “self-supervised learning.” Instead of relying on human-labeled data, the model creates its own labels, generally by hiding the last word of a sentence and learning to predict it. This allows it to learn from massive amounts of raw text without manual annotation.
+
+Unsupervised learning
+Unsupervised learning is the opposite: the model is given data without any labels or answers. Its job is to discover patterns or structure on its own, like grouping similar news articles together or detecting unusual patterns in a dataset. This method is often used for tasks like anomaly detection, clustering, and topic modeling, where the goal is to explore and organize information rather than make specific predictions.
+
+Post-training
+Post-training refers to all of the additional steps taken after training is complete to make the model even more useful. This includes steps like “fine-tuning” and “RLHF.”
+
+Fine-tuning
+Fine-tuning is a post-training technique where you take a trained model and do additional training on specific data that’s tailored to what you want the model to be especially good at. For example, you would fine-tune a model on your company’s customer service conversations to make it respond in your brand’s specific style, or on medical literature to make it better at answering healthcare questions, or on educational content for specific grade levels to create a tutoring assistant that explains concepts in age-appropriate ways.
+
+This additional training tweaks the model’s internal weights to specialize its responses for your specific use case, while preserving the general knowledge it learned during pre-training.
+
+Here’s an awesome technical deep dive into how fine-tuning works:
+
+
+RLHF (reinforcement learning from human feedback)
+RLHF is a post-training technique that goes beyond next-word prediction and fine-tuning by teaching AI models to behave the way humans want them to—making them safer, more helpful, and aligned with our intentions. RLHF is the key method used for what’s referred to as “alignment.”
+
+This process works in two stages: First, human evaluators compare pairs of outputs and choose which is better, training a “reward model” that learns to predict human preferences. Then, the AI model learns through reinforcement learning—a trial-and-error process where it receives “rewards” from the reward model (not directly from humans) for generating responses the reward model predicts humans would prefer. In this second stage, the model is essentially trying to “game” the reward model to get higher scores.
+
+Here’s a great guide, plus this technical deep dive into RLHF:
+
+
+Prompt engineering
+Prompt engineering is the art and science of crafting questions (i.e. “prompts”) for AI models that result in better and more useful responses. Like when you’re talking to a person, the way you phrase your question can lead to dramatically different responses. The same AI model will give very different responses based on how you craft your prompt.
+
+There are two categories of prompts:
+
+Conversational prompts: What you send ChatGPT/Claude/Gemini when you’re having a conversation with it
+
+System/product prompts: The behind-the-scenes instructions that developers bake into products to shape how the AI product behaves
+
+Here’s a podcast episode from just last week where we cover this and much more:
+
+
+RAG (retrieval-augmented generation)
+RAG is a technique that gives models access to additional information at run-time that they weren’t trained on. It’s like giving the model an open-book test instead of having it answer from memory.
+
+When you ask a question like “How do this month’s sales compare to last month?” a retrieval system is able to search through your databases, documents, and knowledge repos to find pertinent information. This retrieved data is then added as context to your original prompt, creating an enriched prompt that the model then processes. This leads to a much better, more accurate answer.
+
+If you don’t give the model the context it needs to answer your question through RAG, this is when “hallucinations” happen (see more below).
+
+Broadly, to summarize:
+
+Pre-training: Teaches the model general knowledge (and language)
+
+Fine-tuning: Specializes the model for specific tasks
+
+RLHF: Aligns the model with human preferences
+
+Prompt engineering: The skills of crafting better inputs to guide the model toward the most useful outputs
+
+RAG: A technique that retrieves additional relevant information from external sources at run-time to give the model up-to-date or task-specific context it wasn’t trained on
+
+Here’s a great overview of fine-tuning vs. RAG vs. prompt engineering:
+
+
+Inference
+Inference is when the model “runs.” When you ask ChatGPT a question and it generates a response, that’s it doing inference.
+
+MCP (model context protocol)
+MCP is a recently released open standard that allows AI models to interact with external tools—like your calendar, CRM, Slack, or codebase—easily, reliably, and securely. Previously, developers had to write their own custom code for each new integration.
+
+MCP also gives the AI the ability to take actions through these tools, for example, updating customer records in Salesforce, sending messages in Slack, scheduling meetings in your calendar, or even committing code to GitHub.
+
+It’s still early in the definition of AI protocols, and there are other competing proposals, like A2A from Google and ACP from BeeAI/IBM.
+
